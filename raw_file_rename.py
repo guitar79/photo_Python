@@ -6,6 +6,7 @@ ModuleNotFoundError: No module named 'cv2'
 conda install opencv
 
 pip install piexif
+pip install exifread
 
 There are only just five functions.
 
@@ -51,7 +52,7 @@ save_dir_name = 'jpeg_CLAHE/'
 base_dir_name = '../190504.WooUm_Island.5Dm2/'
 base_dir_names = ['../2019-02-11.GS_graduation.5dm2/', '../2019-02-22.GS_goodbye.5dm2/',\
                   '../2019-02-27.Gunsan_tour.5dm2/', '../2019-02-28.Gunsan_tour.5dm2/']
-
+base_dir_names = ['../Recuva1/']
 for base_dir_name in base_dir_names[0:1] :
 
 ### Start process
@@ -60,14 +61,15 @@ for base_dir_name in base_dir_names[0:1] :
     j = 1000
     for i in img_lists :
         image_datetime = get_image_datetime_str(i).replace(':','')
-        image_datetime = image_datetime.replace(' ','')
+        image_datetime = image_datetime.replace(' ','-')
         
         try : 
             print(i)
-            os.rename(i, '{0}{1}_py{2:4d}.cr2'.format(base_dir_name, image_datetime, j))
-            write_log(log_file, '{0} :::{1}{2}_py{3:4d}.cr2 is moved'.format(datetime.now(), base_dir_name, image_datetime, j))
+            os.rename(i, '{0}{1}_{2:4d}_py.cr2'.format(base_dir_name, image_datetime, j))
+            write_log(log_file, '{3} :::{0}{1}_{2:4d}_py.cr2 is moved'\
+                      .format(base_dir_name, image_datetime, j, datetime.now()))
         except Exception as err :
-            write_log(log_file, '{0} ::: error {1} {2}'.format(datetime(), err, j))
+            write_log(log_file, '{2} ::: error {0} with {1}'.format(err, j, datetime.now()))
         j += 1
         print_working_time()
     print_working_time()
