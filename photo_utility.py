@@ -49,8 +49,7 @@ def get_image_datetime_str(fullname):
         image_datetime = image_datetime.replace(' ','-')
     else : 
         image_datetime = '00000000-000000'
-    image_datetime = image_datetime.replace('--','00')
-	return image_datetime
+    return image_datetime
 
 def get_image_Model_name(fullname):
     f = open(fullname, 'rb')

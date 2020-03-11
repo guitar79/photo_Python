@@ -47,7 +47,7 @@ def write_log(log_file, log_str):
 base_dir_names = []
 year_dirs = [d for d in sorted(os.listdir('../'))\
              if os.path.isdir(os.path.join('../', d))]
-year_dirs = ['2020-02-15_bicycle-timelapse']
+year_dirs = ['etc']
 for year_dir in year_dirs : 
     base_dir_names.append(base_dir_names.append('../{0}/'.format(year_dir)))
     month_dirs = [d for d in sorted(os.listdir('../{0}/'.format(year_dir))) \
