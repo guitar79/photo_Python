@@ -6,6 +6,8 @@ ModuleNotFoundError: No module named 'cv2'
 conda install opencv
 
 pip install piexif
+
+ModuleNotFoundError: No module named 'exifread'
 pip install exifread
 
 There are only just five functions.
@@ -19,11 +21,6 @@ transplant(filename, filename) - Transplant exif from JPEG to JPEG.
 created by guitar79@naver.com
 
 """
-from datetime import datetime
-import exifread
-import rawpy
-
-mode = 1
 
 #for debugging
 debuging = False
@@ -31,13 +28,57 @@ add_log = True
 if add_log == True :
     log_file = 'python_log.txt'
 
+def getFullnameListOfallFiles(dirName):
+    ##############################################3
+    import os
+    # create a list of file and sub directories 
+    # names in the given directory 
+    listOfFile = sorted(os.listdir(dirName))
+    allFiles = list()
+    # Iterate over all the entries
+    for entry in listOfFile:
+        # Create full path
+        fullPath = os.path.join(dirName, entry)
+        # If entry is a directory then get the list of files in this directory 
+        if os.path.isdir(fullPath):
+            allFiles = allFiles + getFullnameListOfallFiles(fullPath)
+        else:
+            allFiles.append(fullPath)
+                
+    return allFiles
+
+
+def getFullnameListOfallsubDirs1(dirName):
+    ##############################################3
+    import os
+    allFiles = list()
+    for file in sorted(os.listdir(dirName)):
+        d = os.path.join(dirName, file)
+        allFiles.append(d)
+        if os.path.isdir(d):
+            allFiles.extend(getFullnameListOfallsubDirs1(d))
+
+    return allFiles
+
+def getFullnameListOfallsubDirs(dirName):
+    ##############################################3
+    import os
+    allFiles = list()
+    for it in os.scandir(dirName):
+        if it.is_dir():
+            allFiles.append(it.path)
+            allFiles.extend(getFullnameListOfallsubDirs(it))
+
+    return allFiles
+                      
 #for checking time
-cht_start_time = datetime.now()
-def print_working_time():
+def print_working_time(cht_start_time):
+    from datetime import datetime
     working_time = (datetime.now() - cht_start_time) #total days for downloading
     return print('working time ::: %s' % (working_time))
 
 def get_image_datetime_str(fullname):
+    import exifread
     f = open(fullname, 'rb')
     tags = exifread.process_file(f)
     f.close()
@@ -51,7 +92,9 @@ def get_image_datetime_str(fullname):
         image_datetime = '00000000-000000'
     return image_datetime
 
+
 def get_image_Model_name(fullname):
+    import exifread
     f = open(fullname, 'rb')
     tags = exifread.process_file(f)
     f.close()
@@ -108,7 +151,18 @@ def get_image_Model_name(fullname):
         
     return image_ModelID
 
+def get_mov_creation_date(fullname):
+    from hachoir.parser import createParser
+    from hachoir.metadata import extractMetadata
+
+    parser = createParser(fullname)
+    metadata = extractMetadata(parser)
+    return metadata.get('creation_date').strftime("%Y%m%d-%H%M%S")
+
+
+
 def get_image_Software(fullname):
+    import exifread
     f = open(fullname, 'rb')
     tags = exifread.process_file(f)
     f.close()
@@ -122,9 +176,11 @@ def get_image_Software(fullname):
     return image_Software
 
 def write_log(log_file, log_str):
+    import os
     with open(log_file, 'a') as log_f:
-        log_f.write(log_str+'\n')
-    return print (log_str)
+        log_f.write("{}, {}\n".format(os.path.basename(__file__), log_str))
+    return print ("{}, {}\n".format(os.path.basename(__file__), log_str))
+
 
 def bgr2rgb(bgr_image):
     import numpy as np
