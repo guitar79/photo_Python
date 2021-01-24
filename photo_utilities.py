@@ -199,3 +199,28 @@ def clahe_equalized(imgs):
     lab = cv2.merge(lab_planes)
     bgr = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
     return bgr
+
+
+def readJpgPhoto_to_ImagesAndTimes(fullnames):
+    # source : https://learnopencv.com/high-dynamic-range-hdr-imaging-using-opencv-cpp-python/
+    import exifread
+    import numpy as np
+    #import rawpy
+    import cv2
+   
+    images = []
+    times = []
+    for fullname in fullnames:
+        #im = rawpy.imread(fullname)
+        im = cv2.imread(fullname)
+        images.append(im)
+    
+        f = open(fullname, 'rb')
+        tags = exifread.process_file(f)
+        f.close()
+        if 'EXIF ExposureTime' in tags :
+            image_ExposureTime = tags['EXIF ExposureTime'].values
+        times.append(image_ExposureTime)
+    #images = np.array(images, dtype=np.uint8)
+    times = np.array(times, dtype=np.float32)
+    return images, times
