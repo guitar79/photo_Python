@@ -85,12 +85,25 @@ def get_image_datetime_str(fullname):
     if 'EXIF DateTimeOriginal' in tags :
         image_datetime = tags['EXIF DateTimeOriginal'].values.replace(':','')
         image_datetime = image_datetime.replace(' ','-')
+        
     elif 'Image DateTime' in tags :
         image_datetime = tags['Image DateTime'].values.replace(':','')
         image_datetime = image_datetime.replace(' ','-')
     else : 
-        image_datetime = '00000000-000000'
+        image_datetime = "00000000-000000"
+    
     return image_datetime
+
+def get_image_number(fullname):
+    import exifread
+    f = open(fullname, 'rb')
+    tags = exifread.process_file(f)
+    f.close()
+    if 'MakerNote FileNumber' in tags :
+        image_num = tags['MakerNote FileNumber'].printable
+    else : 
+        image_num = "00"
+    return image_num
 
 
 def get_image_Model_name(fullname):
