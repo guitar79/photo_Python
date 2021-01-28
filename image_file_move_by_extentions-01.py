@@ -43,29 +43,33 @@ for fullname in fullnames[:]:
             print("Trying with {}...".format(fullname))
             image_datetime = photo_utilities.get_image_datetime_str(fullname)
             image_ModelID = photo_utilities.get_image_Model_name(fullname).replace(' ','')
-            #image_Num = photo_utilities.get_image_number(fullname)
+            image_Software = photo_utilities.get_image_Software(fullname)
 
-            save_dir_name = '{0}{1}/{1}-{2}-{3}_{4}/'\
+            save_dir_name = '{0}{1}/{1}-{2}-{3}_{4}_{5}/'\
                       .format(save_base_dir_name, image_datetime[0:4], \
-                      image_datetime[4:6], image_datetime[6:8], image_ModelID)
-            
+                      image_datetime[4:6], image_datetime[6:8], image_ModelID, image_Software)
+
             while not os.path.exists(save_dir_name):
                 os.makedirs(save_dir_name)
                 print ("*"*80)
                 print ("{0} is created".format(save_dir_name))
                     
-            if not os.path.exists("{0}{1}_{2:08d}_py.{3}"\
-                      .format(save_dir_name, image_datetime, image_Num, ext_name)):
+            if not os.path.exists("{0}{1}_{2}_{3}_{4:08d}_py.{5}"\
+                      .format(save_dir_name, image_datetime, \
+                      image_ModelID, image_Software, image_Num, ext_name)):
                 os.rename(fullname,\
-                     "{0}{1}_{2:08d}_py.{3}".format(save_dir_name, \
-                     image_datetime, image_Num, ext_name))
+                      "{0}{1}_{2}_{3}_{4:08d}_py.{5}"\
+                      .format(save_dir_name, image_datetime, \
+                      image_ModelID, image_Software, image_Num, ext_name))
                 photo_utilities.write_log(log_file, \
-                      "{4} is moved to {0}{1}_{2:08d}_py.{3}"\
-                      .format(save_dir_name, image_datetime, image_Num, ext_name, fullname))
+                      "{6} is moved to {0}{1}_{2}_{3}_{4:08d}_py.{5}"\
+                      .format(save_dir_name, image_datetime, \
+                      image_ModelID, image_Software, image_Num, ext_name, fullname))
             else : 
                 photo_utilities.write_log(log_file, \
-                      "{4} is cannot moved because {0}{1}_{2:08d}_py.{3} is already exist.."\
-                      .format(save_dir_name, image_datetime, image_Num, ext_name, fullname))
+                      "{6} cannot move to {0}{1}_{2}_{3}_{4:08d}_py.{5}"\
+                      .format(save_dir_name, image_datetime, \
+                      image_ModelID, image_Software, image_Num, ext_name, fullname))
 
         except Exception as err :
             photo_utilities.write_log(log_file, 

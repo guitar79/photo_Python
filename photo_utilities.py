@@ -173,7 +173,6 @@ def get_mov_creation_date(fullname):
     return metadata.get('creation_date').strftime("%Y%m%d-%H%M%S")
 
 
-
 def get_image_Software(fullname):
     import exifread
     f = open(fullname, 'rb')
@@ -183,9 +182,10 @@ def get_image_Software(fullname):
         image_Software = tags['Image Software'].printable.replace(' ','')
     else : 
         image_Software = 'NoSW'
-    image_Software = image_Software.replace('DigitalPhotoProfessional', 'DPP')
+
     if 'ACDSystems' in image_Software : 
         image_Software = 'ACDSystems'
+    image_Software = image_Software.replace('DigitalPhotoProfessional', 'DPP')
     return image_Software
 
 def write_log(log_file, log_str):
