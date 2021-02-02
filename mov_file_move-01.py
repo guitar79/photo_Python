@@ -22,9 +22,7 @@ created by guitar79@naver.com
 import os
 from datetime import datetime
 import photo_utilities
-import struct
 
-mode = 1
 
 #for debugging
 debuging = False
@@ -32,7 +30,7 @@ add_log = True
 if add_log == True :
     log_file = 'mov_file_rename.log'
 
-base_dir_name = '../New_Photo/'
+base_dir_name = '../working/New_Photo/'
 
 fullnames = photo_utilities.getFullnameListOfallFiles(base_dir_name)
 
@@ -47,24 +45,19 @@ for fullname in fullnames[:]:
                 
         try :
             print("Trying with {}...".format(fullname))
-            if mode == 1 : 
-                save_dir_name = '{0}{1}/{1}-{2}-{3}/'\
-                      .format(save_base_dir_name, mov_datetime[0:4], 
-                              mov_datetime[4:6], mov_datetime[6:8])
-            elif mode == 2 : 
-                 save_dir_name = base_dir_name
             
-            if not os.path.exists(save_dir_name):
+            save_dir_name = '{0}{1}/{1}-{2}-{3}/'\
+                  .format(save_base_dir_name, mov_datetime[0:4], 
+                          mov_datetime[4:6], mov_datetime[6:8])
+            
+            while not os.path.exists(save_dir_name):
                 os.makedirs(save_dir_name)
                 print ('*'*80)
                 print ('{0} is created'.format(save_dir_name))
-            else :
-                print ('*'*80)
-                print ('{0} is already exist'.format(save_dir_name))
                     
-            os.rename(fullname, '{0}{1}_{2:08d}_py.jpg'.format(save_dir_name, mov_datetime, Img_N))
+            os.rename(fullname, '{0}{1}_{2:08d}_py.mov'.format(save_dir_name, mov_datetime, Img_N))
             #print(fullname, '{0}{1}_{2:08d}_py.jpg'.format(save_dir_name, image_datetime, Img_N))
-            photo_utilities.write_log(log_file, '{3}:::{0}{1}_{2:08d}_py.jpg'.format(save_dir_name, mov_datetime, Img_N, datetime.now()))
+            photo_utilities.write_log(log_file, '{3}:::{0}{1}_{2:08d}_py.mov'.format(save_dir_name, mov_datetime, Img_N, datetime.now()))
         
         except Exception as err :
             photo_utilities.write_log(log_file, '{2} ::: error {0} with {1}'.format(err, Img_N, datetime.now()))

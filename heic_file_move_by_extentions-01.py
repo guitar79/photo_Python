@@ -7,6 +7,8 @@ conda install opencv
 
 pip install piexif
 pip install exifread
+ModuleNotFoundError: No module named 'pyheif'
+pip install pyheif
 
 There are only just five functions.
 
@@ -40,39 +42,40 @@ save_base_dir_name = "../{}file/".format(ext_name)
 image_Num = 0
 for fullname in fullnames[:]:
 #fullname = fullnames[10]
-    if fullname[-4:].lower() == ".{}".format(ext_name) :
+    fullname_el = fullname.split(".")
+    if fullname_el[-1].lower() == "{}".format(ext_name) :
         image_Num += 1
         try :
             print("Trying the file :\n{}".format(fullname))
-            image_datetime = photo_utilities.get_image_datetime_str(fullname)
-            image_ModelID = photo_utilities.get_image_Model_name(fullname).replace(' ','')
-            image_Software = photo_utilities.get_image_Software(fullname)
+            image_datetime, camera_company, camera_model, image_Software \
+                = photo_utilities.get_fileInfo_from_heifexif(fullname)
 
-            save_dir_name = '{0}{1}/{1}-{2}-{3}_{4}_{5}/'\
+            save_dir_name = '{0}{1}/{1}-{2}-{3}_{4}_{5}_{6}/'\
                       .format(save_base_dir_name, image_datetime[0:4], \
-                      image_datetime[4:6], image_datetime[6:8], image_ModelID, image_Software)
+                      image_datetime[4:6], image_datetime[6:8], \
+                          camera_company, camera_model, image_Software)
 
             while not os.path.exists(save_dir_name):
                 os.makedirs(save_dir_name)
                 print ("*"*80)
                 print ("{0} is created".format(save_dir_name))
                     
-            if not os.path.exists("{0}{1}_{2}_{3}_{4:08d}_py.{5}"\
+            if not os.path.exists("{0}{1}_{2}_{3}_{4}_{5:08d}_py.{6}"\
                       .format(save_dir_name, image_datetime, \
-                      image_ModelID, image_Software, image_Num, ext_name)):
+                      camera_company, camera_model, image_Software, image_Num, ext_name)):
                 os.rename(fullname,\
-                      "{0}{1}_{2}_{3}_{4:08d}_py.{5}"\
+                      "{0}{1}_{2}_{3}_{4}_{5:08d}_py.{6}"\
                       .format(save_dir_name, image_datetime, \
-                      image_ModelID, image_Software, image_Num, ext_name))
+                      camera_company, camera_model, image_Software, image_Num, ext_name))
                 photo_utilities.write_log(log_file, \
-                      "{6} is moved to {0}{1}_{2}_{3}_{4:08d}_py.{5}"\
+                      "{7} is moved to {0}{1}_{2}_{3}_{4}_{5:08d}_py.{6}"\
                       .format(save_dir_name, image_datetime, \
-                      image_ModelID, image_Software, image_Num, ext_name, fullname))
+                      camera_company, camera_model, image_Software, image_Num, ext_name, fullname))
             else : 
                 photo_utilities.write_log(log_file, \
-                      "{6} cannot move to {0}{1}_{2}_{3}_{4:08d}_py.{5}"\
+                      "{7} cannot move to {0}{1}_{2}_{3}_{4}_{5:08d}_py.{6}"\
                       .format(save_dir_name, image_datetime, \
-                      image_ModelID, image_Software, image_Num, ext_name, fullname))
+                      camera_company, camera_model, image_Software, image_Num, ext_name, fullname))
 
         except Exception as err :
             photo_utilities.write_log(log_file, 

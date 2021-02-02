@@ -105,6 +105,81 @@ def get_image_number(fullname):
         image_num = "00"
     return image_num
 
+def get_fileInfo_from_heifexif(fullname):
+    # Open the file
+    import pyheif
+    import piexif
+    heif_file = pyheif.read(fullname)
+
+    # Retrive the metadata
+    for metadata in heif_file.metadata or []:
+        if metadata['type'] == 'Exif':
+            exif_dict = piexif.load(metadata['data'])
+    image_datetime = exif_dict['0th'][306].decode('utf-8').replace(':','')
+    image_datetime = image_datetime.replace(' ','-')
+    camera_company = exif_dict['0th'][271].decode('utf-8')
+    camera_model = exif_dict['0th'][272].decode('utf-8').replace(' ','-')
+    image_Software = "-"
+    return image_datetime, camera_company, camera_model, image_Software
+
+
+def get_fileInfo_from_image(fullname):
+    fullname_el = fullname.split(".")
+    if fullname_el[-1].lower() == "heic" :
+        # Open the file
+        import pyheif
+        import piexif
+        heif_file = pyheif.read(fullname)
+    
+        # Retrive the metadata
+        for metadata in heif_file.metadata or []:
+            if metadata['type'] == 'Exif':
+                exif_dict = piexif.load(metadata['data'])
+        image_datetime = exif_dict['0th'][306].decode('utf-8').replace(':','')
+        image_datetime = image_datetime.replace(' ','-')
+        camera_company = exif_dict['0th'][271].decode('utf-8')
+        camera_model = exif_dict['0th'][272].decode('utf-8').replace(' ','-')
+        image_Software = "-"
+    
+    elif fullname_el[-1].lower() == "cr2" or fullname_el[-1].lower() == "jpg":
+        import exifread
+        f = open(fullname, 'rb')
+        tags = exifread.process_file(f)
+        f.close()
+        ##########################################################
+        if 'EXIF DateTimeOriginal' in tags :
+            image_datetime = tags['EXIF DateTimeOriginal'].values.replace(':','')
+            image_datetime = image_datetime.replace(' ','-')
+            
+        elif 'Image DateTime' in tags :
+            image_datetime = tags['Image DateTime'].values.replace(':','')
+            image_datetime = image_datetime.replace(' ','-')
+        else : 
+            image_datetime = "00000000-000000"
+        ##########################################################
+        
+        
+        
+        if 'Image Make' in tags and 'Image Model' in tags : 
+            camera_model = tags['Image Make'].printable.replace(' ','')\
+                +tags['Image Model'].printable.replace(' ','')
+        elif 'MakerNote ModelID' in tags : 
+            camera_model = tags['MakerNote ModelID'].printable.replace(' ','')        
+        else : 
+            camera_model = '-'
+        ##########################################################    
+        if 'Image Software' in tags : 
+            image_Software = tags['Image Software'].printable.replace(' ','')
+        else : 
+            image_Software = '-'
+        if 'ACDSystems' in image_Software : 
+            image_Software = 'ACDSystems'
+
+        image_Software = image_Software.replace('DigitalPhotoProfessional', 'DPP')
+        
+    return image_datetime, camera_company, camera_model, image_Software
+
+
 
 def get_image_Model_name(fullname):
     import exifread
@@ -119,48 +194,48 @@ def get_image_Model_name(fullname):
         image_ModelID = tags['MakerNote ModelID'].printable.replace(' ','')
         
     else : 
-        image_ModelID = 'NoModel'
+        image_ModelID = '-'
     image_ModelID = image_ModelID.replace('CanonCanon','Canon')
     image_ModelID = image_ModelID.replace('/','')
     image_ModelID = image_ModelID.replace('\\','')
-    image_ModelID = image_ModelID.replace('EASTMANKODAKCOMPANYKODAKDC3400ZOOMDIGITALCAMERA', 'KODAK-DC3400')
-    image_ModelID = image_ModelID.replace('OLYMPUSOPTICALCO.,LTDC3100Z,C3020Z', 'OLYMPUS-C3100Z')
-    image_ModelID = image_ModelID.replace('OLYMPUSCORPORATIONC-5000Z', 'OLYMPUS-C5000Z')
-    image_ModelID = image_ModelID.replace('CanonEOSKissDigitalN', 'CANON-EOS-KissN')
-    image_ModelID = image_ModelID.replace('CanonEOS350DDIGITAL', 'CANON-EOS-350D')
-    image_ModelID = image_ModelID.replace('CanonEOS400DDIGITAL', 'CANON-EOS-400D')
-    image_ModelID = image_ModelID.replace('CanonEOS', 'CANON-EOS')
+    image_ModelID = image_ModelID.replace('EASTMANKODAKCOMPANYKODAKDC3400ZOOMDIGITALCAMERA', 'KODAK_DC3400')
+    image_ModelID = image_ModelID.replace('OLYMPUSOPTICALCO.,LTDC3100Z,C3020Z', 'OLYMPUS_C3100Z')
+    image_ModelID = image_ModelID.replace('OLYMPUSCORPORATIONC-5000Z', 'OLYMPUS_C5000Z')
+    image_ModelID = image_ModelID.replace('CanonEOSKissDigitalN', 'CANON_EOS-KissN')
+    image_ModelID = image_ModelID.replace('CanonEOS350DDIGITAL', 'CANON_EOS-350D')
+    image_ModelID = image_ModelID.replace('CanonEOS400DDIGITAL', 'CANON_EOS-400D')
+    image_ModelID = image_ModelID.replace('CanonEOS', 'CANON_EOS')
     image_ModelID = image_ModelID.replace('EOS5DMarkII', 'EOS-5DMarkII')
     image_ModelID = image_ModelID.replace('EOS650D', 'EOS-650D')
-    image_ModelID = image_ModelID.replace('CanonPowerShotS230', 'CANON-S230')
-    image_ModelID = image_ModelID.replace('CanonPowerShotG', 'CANON-G')
-    image_ModelID = image_ModelID.replace('CanonDIGITALIXUS50', 'CANON-IXUS50')
-    image_ModelID = image_ModelID.replace('CanonIXYDIGITAL800IS', 'CANON-IXY800IS')
-    image_ModelID = image_ModelID.replace('SONYDCR-TRV17', 'SONY-DCR-TRV17')
-    image_ModelID = image_ModelID.replace('SONYCYBERSHOT', 'SONY-CYBERSHOT')
-    image_ModelID = image_ModelID.replace('SONYDSC', 'SONY-DSC')
-    image_ModelID = image_ModelID.replace('SONYNEX-5N', 'SONY-NEX-5N')
-    image_ModelID = image_ModelID.replace('SONYILCE', 'SONY-ILCE')
-    image_ModelID = image_ModelID.replace('NIKONE', 'NIKON-E')
-    image_ModelID = image_ModelID.replace('NIKONCORPORATIONNIKOND', 'NIKON-D')
-    image_ModelID = image_ModelID.replace('SAMSUNGELECTRONICSVM-C630', 'SAMSUNG-SVM-C630')
-    image_ModelID = image_ModelID.replace('SAMSUNGTECHWINCO.,LTDDigimaxV5KenoxV5', 'SAMSUNG-DigimaxV5')
-    image_ModelID = image_ModelID.replace('SamsungTechwinDigimax530KENOXD530', 'SAMSUNG-Digimax530')
+    image_ModelID = image_ModelID.replace('CanonPowerShotS230', 'CANON_S230')
+    image_ModelID = image_ModelID.replace('CanonPowerShotG', 'CANON_G')
+    image_ModelID = image_ModelID.replace('CanonDIGITALIXUS50', 'CANON_IXUS50')
+    image_ModelID = image_ModelID.replace('CanonIXYDIGITAL800IS', 'CANON_IXY800IS')
+    image_ModelID = image_ModelID.replace('SONYDCR-TRV17', 'SONY_DCR-TRV17')
+    image_ModelID = image_ModelID.replace('SONYCYBERSHOT', 'SONY_CYBERSHOT')
+    image_ModelID = image_ModelID.replace('SONYDSC', 'SONY_DSC')
+    image_ModelID = image_ModelID.replace('SONYNEX-5N', 'SONY_NEX-5N')
+    image_ModelID = image_ModelID.replace('SONYILCE', 'SONY_ILCE')
+    image_ModelID = image_ModelID.replace('NIKONE', 'NIKON_E')
+    image_ModelID = image_ModelID.replace('NIKONCORPORATIONNIKOND', 'NIKON_D')
+    image_ModelID = image_ModelID.replace('SAMSUNGELECTRONICSVM-C630', 'SAMSUNG_SVM-C630')
+    image_ModelID = image_ModelID.replace('SAMSUNGTECHWINCO.,LTDDigimaxV5KenoxV5', 'SAMSUNG_DigimaxV5')
+    image_ModelID = image_ModelID.replace('SamsungTechwinDigimax530KENOXD530', 'SAMSUNG_Digimax530')
     image_ModelID = image_ModelID.replace('SAMSUNGES95', 'SAMSUNG-ES95')
-    image_ModelID = image_ModelID.replace('SAMSUNGWB150WB150FWB,...]', 'SAMSUNG-WB150')
-    image_ModelID = image_ModelID.replace('SAMSUNGSM', 'SAMSUNG-SM')
-    image_ModelID = image_ModelID.replace('SAMSUNGEK', 'SAMSUNG-EK')
-    image_ModelID = image_ModelID.replace('SAMSUNGSH', 'SAMSUNG-SH')
-    image_ModelID = image_ModelID.replace('SAMSUNGSSV', 'SAMSUNG-SHV')
-    image_ModelID = image_ModelID.replace('SamsungTechwinDigimaxV4', 'SAMSUNG-DigimaxV4')
+    image_ModelID = image_ModelID.replace('SAMSUNGWB150WB150FWB,...]', 'SAMSUNG_WB150')
+    image_ModelID = image_ModelID.replace('SAMSUNGSM', 'SAMSUNG_SM')
+    image_ModelID = image_ModelID.replace('SAMSUNGEK', 'SAMSUNG_EK')
+    image_ModelID = image_ModelID.replace('SAMSUNGSH', 'SAMSUNG_SH')
+    image_ModelID = image_ModelID.replace('SAMSUNGSSV', 'SAMSUNG_SHV')
+    image_ModelID = image_ModelID.replace('SamsungTechwinDigimaxV4', 'SAMSUNG_DigimaxV4')
     image_ModelID = image_ModelID.replace('LGElectronicsLG', 'LG')
-    image_ModelID = image_ModelID.replace('PanasonicDMC-LX2', 'PANASONIC-DMC-LX2')
-    image_ModelID = image_ModelID.replace('ApplePhone', 'APPLE-iPhone')
-    image_ModelID = image_ModelID.replace('Applei', 'APPLE-i')
-    image_ModelID = image_ModelID.replace('DJIFC1102', 'DJI-FC1102')
-    image_ModelID = image_ModelID.replace('DJIFC6310', 'DJI-FC6310')
-    image_ModelID = image_ModelID.replace('XIAOYIYDXJ1', 'XIAOYI-YDXJ1')
-    image_ModelID = image_ModelID.replace('PANTECH', 'PANTECH-')
+    image_ModelID = image_ModelID.replace('PanasonicDMC-LX2', 'PANASONIC_DMC-LX2')
+    image_ModelID = image_ModelID.replace('ApplePhone', 'APPLE_iPhone')
+    image_ModelID = image_ModelID.replace('Applei', 'APPLE_i')
+    image_ModelID = image_ModelID.replace('DJIFC1102', 'DJI_FC1102')
+    image_ModelID = image_ModelID.replace('DJIFC6310', 'DJI_FC6310')
+    image_ModelID = image_ModelID.replace('XIAOYIYDXJ1', 'XIAOYI_YDXJ1')
+    image_ModelID = image_ModelID.replace('PANTECH', 'PANTECH_')
         
     return image_ModelID
 
@@ -181,7 +256,7 @@ def get_image_Software(fullname):
     if 'Image Software' in tags : 
         image_Software = tags['Image Software'].printable.replace(' ','')
     else : 
-        image_Software = 'NoSW'
+        image_Software = '-'
 
     if 'ACDSystems' in image_Software : 
         image_Software = 'ACDSystems'
