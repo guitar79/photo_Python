@@ -70,6 +70,30 @@ def getFullnameListOfallsubDirs(dirName):
             allFiles.extend(getFullnameListOfallsubDirs(it))
 
     return allFiles
+
+def checkDuplicated_jpg(fullname1, fullname2):
+    import cv2
+    #pip install opencv-python
+    #pip install opencv-contrib-python
+    Duplicated_im = False
+    try :         
+        im1 = cv2.imread("{}".format(fullname1))
+        im2 = cv2.imread("{}".format(fullname2))
+    
+        # 1) Check if 2 images are equals
+        if im1.shape == im2.shape:
+            #print("The images have same size and channels")
+            difference = cv2.subtract(im1, im2)
+            b, g, r = cv2.split(difference)
+        
+            if cv2.countNonZero(b) == 0 and cv2.countNonZero(g) == 0 and cv2.countNonZero(r) == 0:
+                Duplicated_im = True
+                #print("The images are completely Equal")
+
+    except:
+        print("reading error with {}, {}".format(fullname1, fullname2))
+    return Duplicated_im
+
                       
 #for checking time
 def print_working_time(cht_start_time):
