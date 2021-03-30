@@ -22,7 +22,7 @@ created by guitar79@naver.com
 from glob import glob
 import os
 from datetime import datetime
-import photo_utility
+import photo_utilities
 
 mode = 1
 
@@ -67,8 +67,8 @@ for base_dir_name in base_dir_names :
         ### Start process    
         j = 1000
         for fullname in fullnames :
-            image_datetime = photo_utility.get_image_datetime_str(fullname)
-            image_ModelID = photo_utility.get_image_Model_name(fullname)
+            image_datetime = photo_utilities.get_image_datetime_str(fullname)
+            image_ModelID = photo_utilities.get_image_Model_name(fullname)
             #image_Software = photo_utility.get_image_Software(fullname)
             
             try :

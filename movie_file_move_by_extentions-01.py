@@ -24,8 +24,8 @@ from datetime import datetime
 import photo_utilities
 
 ext_name = "mp4"
-ext_name = "mov"
-ext_name = "3gp"
+#ext_name = "mov"
+#ext_name = "3gp"
 
 #for debugging
 debuging = False
@@ -33,11 +33,11 @@ add_log = True
 if add_log == True :
     log_file = "{}_file_rename.log".format(ext_name)
 
-base_dir_name = "../working/New_Photo/"
+base_dir_name = "../New_Photo/"
 
 fullnames = photo_utilities.getFullnameListOfallFiles(base_dir_name)
 
-save_base_dir_name = "../{}file/".format(ext_name)
+save_base_dir_name = "../../{}file/".format(ext_name)
 
 Img_N = 0
 

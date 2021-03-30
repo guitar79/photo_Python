@@ -30,11 +30,11 @@ add_log = True
 if add_log == True :
     log_file = 'mov_file_rename.log'
 
-base_dir_name = '../working/New_Photo/'
+base_dir_name = '../New_Photo/'
 
 fullnames = photo_utilities.getFullnameListOfallFiles(base_dir_name)
 
-save_base_dir_name = '../mp4file/'
+save_base_dir_name = '../../mp4file/'
 
 Img_N = 0
 

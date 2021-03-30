@@ -266,7 +266,6 @@ def get_image_Model_name(fullname):
 def get_mov_creation_date(fullname):
     from hachoir.parser import createParser
     from hachoir.metadata import extractMetadata
-
     parser = createParser(fullname)
     metadata = extractMetadata(parser)
     return metadata.get('creation_date').strftime("%Y%m%d-%H%M%S")
