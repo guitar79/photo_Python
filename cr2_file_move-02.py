@@ -35,7 +35,7 @@ base_dir_name = '../New_Photo/'
 
 fullnames = photo_utilities.getFullnameListOfallFiles(base_dir_name)
 
-save_base_dir_name = '../cr2file/'
+save_base_dir_name = '../../cr2file/'
 
 image_Num = 0
 for fullname in fullnames[:]:
