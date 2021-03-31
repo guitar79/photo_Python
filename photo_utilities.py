@@ -268,7 +268,13 @@ def get_mov_creation_date(fullname):
     from hachoir.metadata import extractMetadata
     parser = createParser(fullname)
     metadata = extractMetadata(parser)
-    return metadata.get('creation_date').strftime("%Y%m%d-%H%M%S")
+    if 'creation_date' in metadata :
+        creation_date = metadata.get('creation_date').strftime("%Y%m%d-%H%M%S")
+    else : 
+        import os.path, time
+        from dateutil.parser import parse
+        creation_date = parse(time.ctime(os.path.getctime(fullname))).strftime("%Y%m%d-%H%M%S")
+    return creation_date
 
 
 def get_image_Software(fullname):
