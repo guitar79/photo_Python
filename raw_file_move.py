@@ -30,18 +30,8 @@ mode = 1
 debuging = False
 add_log = True
 if add_log == True :
-    log_file = 'python_log.txt'
+    log_file = "raw_file_move.log"
 
-#for checking time
-cht_start_time = datetime.now()
-def print_working_time():
-    working_time = (datetime.now() - cht_start_time) #total days for downloading
-    return print('working time ::: %s' % (working_time))
-
-def write_log(log_file, log_str):
-    with open(log_file, 'a') as log_f:
-        log_f.write(log_str+'\n')
-    return print (log_str)
 
 base_dir_names = []
 year_dirs = [d for d in sorted(os.listdir('../'))\

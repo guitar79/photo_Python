@@ -25,17 +25,18 @@ import photo_utilities
 
 ext_name = "jpg"
 #ext_name = "png"
-ext_name = "heic"
+#ext_name = "heic"
+ext_name = "cr2"
 
 add_log = True
 if add_log == True :
     log_file = 'iamge_file_move_by_extentions-.log'
 
-base_dir_name = '../working/New_Photo/'
+base_dir_name = '../New_Photo/'
 
 fullnames = photo_utilities.getFullnameListOfallFiles(base_dir_name)
 
-save_base_dir_name = "../{}file/".format(ext_name)
+save_base_dir_name = "../../{}file/".format(ext_name)
 
 image_Num = 0
 for fullname in fullnames[:]:
