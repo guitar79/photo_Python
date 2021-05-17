@@ -25,7 +25,7 @@ import photo_utilities
 
 
 ext_names = ["mp4", "mov", "3gp"]
-ext_name = "mp4"
+#ext_name = "mp4"
 #ext_name = "mov"
 #ext_name = "3gp"
 
