@@ -2,7 +2,7 @@
 
 Anaconda environment
 
-conda create -n photo_Python_env python=3.7
+conda create -n photo_Python_env python=3.6
 conda env list
 
 # activate 가상환경 시작
@@ -21,13 +21,15 @@ deactivate
 
 # install module
 conda install -c phygbu pyheif
-conda install -c conda-forge opencv piexif exifread
+conda install -c conda-forge opencv piexif exifread 
+conda install -c conda-forge python-dateutil
+pip install hachoir
 
 # 가상환경 내보내기 (export)
 conda env export > photo_Python_env.yaml
 
 # .yaml 파일로 새로운 가상환경 만들기
-conda env create -f my_python_env.yaml
+conda env create -f photo_Python_env.yaml
 
 # 가상환경 리스트 출력
 conda env list
