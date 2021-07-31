@@ -73,7 +73,7 @@ for base_dir_name in base_dir_names[0:1] :
                 print ('*'*80)
                 print ('{0} is already exist'.format(save_dir_name))
                 
-            if not os.path.isfile('{0}{1}_py{2:4d}.cr2'.format(save_dir_name, image_datetime, j))
+            if not os.path.isfile('{0}{1}_py{2:4d}.cr2'.format(save_dir_name, image_datetime, j)):
                 os.rename(fullname, '{0}{1}_py{2:4d}.cr2'.format(save_dir_name, image_datetime, j))
             write_log(log_file, '{3}:::{0}{1}_py{2:4d}.cr2'.format(save_dir_name, image_datetime, j, datetime.now()))
         
