@@ -23,13 +23,28 @@ created by guitar79@naver.com
 """
 
 #for debugging
-debuging = False
-add_log = True
-if add_log == True :
-    log_file = 'python_log.txt'
+#from datetime import datetime
+#from astropy.io import fits
 
+# =============================================================================
+
+def write_log2(log_file, log_str):
+    import os
+    with open(log_file, 'a') as log_f:
+        log_f.write("{}, {}\n".format(os.path.basename(__file__), log_str))
+    return print ("{}, {}\n".format(os.path.basename(__file__), log_str))
+
+def write_log(log_file, log_str):
+    import time
+    timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
+    msg = '[' + timestamp + '] ' + log_str
+    print (msg)
+    with open(log_file, 'a') as f:
+        f.write(msg + '\n')
+        
+# =============================================================================        
 def getFullnameListOfallFiles(dirName):
-    ##############################################3
+# =============================================================================
     import os
     # create a list of file and sub directories 
     # names in the given directory 

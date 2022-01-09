@@ -23,6 +23,12 @@ import os
 from datetime import datetime
 import photo_utilities
 
+log_dir = "logs/"
+log_file = "{}{}.log".format(log_dir, os.path.basename(__file__)[:-3])
+err_log_file = "{}{}_err.log".format(log_dir, os.path.basename(__file__)[:-3])
+print ("log_file: {}".format(log_file))
+print ("err_log_file: {}".format(err_log_file))
+
 ext_names = ["dng", "jpg", "png", "heic", "cr2"]
 #ext_name = "dng"
 #ext_name = "jpg"
@@ -37,12 +43,6 @@ fullnames = photo_utilities.getFullnameListOfallFiles(base_dir_name)
 
 for ext_name in ext_names :
 
-    # for debugging
-    debuging = False
-    add_log = True
-    if add_log == True:
-        log_file = "{}_file_rename.log".format(ext_name)
-
     save_base_dir_name = "../../{}file/".format(ext_name)
 
     image_Num = 0
@@ -50,8 +50,10 @@ for ext_name in ext_names :
     #fullname = fullnames[10]
         if fullname[-4:].lower() == ".{}".format(ext_name) :
             image_Num += 1
+            print('#'*40,
+                "\n{2:.01f}%  ({0}/{1}) {3}".format(image_Num, len(fullnames), (image_Num/len(fullnames))*100, os.path.basename(__file__)))
+            print ("Starting...   fullname: {}".format(fullname))
             try :
-                print("Trying the file :\n{}".format(fullname))
                 image_datetime = photo_utilities.get_image_datetime_str(fullname)
                 image_ModelID = photo_utilities.get_image_Model_name(fullname).replace(' ','')
                 image_Software = photo_utilities.get_image_Software(fullname)

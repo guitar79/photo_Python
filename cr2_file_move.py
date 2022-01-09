@@ -23,13 +23,11 @@ import os
 from datetime import datetime
 import photo_utilities
 
-mode = 1
-
-#for debugging
-debuging = False
-add_log = True
-if add_log == True :
-    log_file = 'raw_file_move.log'
+log_dir = "logs/"
+log_file = "{}{}.log".format(log_dir, os.path.basename(__file__)[:-3])
+err_log_file = "{}{}_err.log".format(log_dir, os.path.basename(__file__)[:-3])
+print ("log_file: {}".format(log_file))
+print ("err_log_file: {}".format(err_log_file))
 
 base_dir_name = '../New_Photo/'
 
@@ -48,12 +46,9 @@ for fullname in fullnames[:]:
             image_ModelID = photo_utilities.get_image_Model_name(fullname).replace(' ','')
             #image_Num = photo_utilities.get_image_number(fullname)
 
-            if mode == 1 : 
-                save_dir_name = '{0}{1}/{1}-{2}-{3}_{4}/'\
+            save_dir_name = '{0}{1}/{1}-{2}-{3}_{4}/'\
                       .format(save_base_dir_name, image_datetime[0:4], 
                       image_datetime[4:6], image_datetime[6:8], image_ModelID)
-            elif mode == 2 : 
-                 save_dir_name = base_dir_name
             
             while not os.path.exists(save_dir_name):
                 os.makedirs(save_dir_name)

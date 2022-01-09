@@ -1,16 +1,15 @@
 # photo_Python
-
 Anaconda environment
 
-conda create -n photo_Python_env python=3.6
+conda create -n photo_Python_ubuntu_env
 conda env list
 
 # activate 가상환경 시작
 mac/linux
-source activate photo_Python_env
+source activate photo_Python_ubuntu_env
 
 windows
-activate photo_Python_env
+activate photo_Python_win_env
 
 # deactivate 가상환경 종료
 mac/linux
@@ -20,19 +19,22 @@ windows
 deactivate
 
 # install module
-conda install -c phygbu pyheif
+conda install -c phygbu pyheif spyder
 conda install -c conda-forge opencv piexif exifread 
 conda install -c conda-forge python-dateutil
 pip install hachoir
 
 # 가상환경 내보내기 (export)
-conda env export > photo_Python_env.yaml
+conda env export > photo_Python_ubuntu_env.yaml
+conda env export > photo_Python_win_env.yaml
 
 # .yaml 파일로 새로운 가상환경 만들기
-conda env create -f photo_Python_env.yaml
+conda env create -f photo_Python_ubuntu_env.yaml
+conda env create -f photo_Python_win_env.yaml
 
 # 가상환경 리스트 출력
 conda env list
 
 # 가상환경 제거하기
-conda env remove -n photo_Python_env
+conda env remove -n photo_Python_ubuntu_env
+conda env remove -n photo_Python_win_env
