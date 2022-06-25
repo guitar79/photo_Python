@@ -23,6 +23,11 @@ import os
 from datetime import datetime
 import photo_utilities
 
+log_dir = "logs/"
+log_file = "{}{}.log".format(log_dir, os.path.basename(__file__)[:-3])
+err_log_file = "{}{}_err.log".format(log_dir, os.path.basename(__file__)[:-3])
+print ("log_file: {}".format(log_file))
+print ("err_log_file: {}".format(err_log_file))
 
 ext_names = ["mp4", "mov", "3gp"]
 #ext_name = "mp4"
@@ -34,12 +39,6 @@ base_dir_name = "../New_Photo/"
 fullnames = photo_utilities.getFullnameListOfallFiles(base_dir_name)
 
 for ext_name in ext_names :
-
-    # for debugging
-    debuging = False
-    add_log = True
-    if add_log == True:
-        log_file = "{}_file_rename.log".format(ext_name)
 
     save_base_dir_name = "../../{}file/".format(ext_name)
 

@@ -34,10 +34,10 @@ Anaconda environment
 conda create -n photo_Python_win_env
 conda env list
 
-### activate ê°??ƒ?™˜ê²? ?‹œ?‘
+### activate conda virtual environment
 conda activate photo_Python_win_env
 
-### deactivate ê°??ƒ?™˜ê²? ì¢…ë£Œ
+### deactivate conda virtual environment
 conda deactivate
 
 ### install module
@@ -46,14 +46,12 @@ conda install -c conda-forge python-dateutil
 conda install -c conda-forge opencv piexif exifread 
 pip install hachoir
 
-### ê°??ƒ?™˜ê²? ?‚´ë³´ë‚´ê¸? (export)
+### expert conda virtual environment 
 conda env export > photo_Python_win_env.yaml
 
-### .yaml ?ŒŒ?¼ë¡? ?ƒˆë¡œìš´ ê°??ƒ?™˜ê²? ë§Œë“¤ê¸?
+### create conda virtual environment from .yaml file
 conda env create -f photo_Python_win_env.yaml
 
-### ê°??ƒ?™˜ê²? ë¦¬ìŠ¤?Š¸ ì¶œë ¥
-conda env list
 
-### ê°??ƒ?™˜ê²? ? œê±°í•˜ê¸?
+### remove conda virtual environment
 conda env remove -n photo_Python_win_env
