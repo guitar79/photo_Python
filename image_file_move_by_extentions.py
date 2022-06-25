@@ -20,6 +20,7 @@ created by guitar79@naver.com
 
 """
 import os
+import shutil 
 from datetime import datetime
 import photo_utilities
 

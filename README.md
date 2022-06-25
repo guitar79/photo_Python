@@ -1,40 +1,59 @@
 # photo_Python
+
+## ubuntu
 Anaconda environment
 
 conda create -n photo_Python_ubuntu_env
 conda env list
 
-# activate ê°€ìƒí™˜ê²½ ì‹œì‘
-mac/linux
-source activate photo_Python_ubuntu_env
+### activate conda virtual environment
+conda activate photo_Python_ubuntu_env
 
-windows
-activate photo_Python_win_env
-
-# deactivate ê°€ìƒí™˜ê²½ ì¢…ë£Œ
-mac/linux
+### deactivate conda virtual environment
 conda deactivate
 
-windows
-deactivate
-
-# install module
+### install module
 conda install -c phygbu pyheif spyder
 conda install -c conda-forge opencv piexif exifread 
 conda install -c conda-forge python-dateutil
 pip install hachoir
 
-# ê°€ìƒí™˜ê²½ ë‚´ë³´ë‚´ê¸° (export)
+### expert conda virtual environment 
 conda env export > photo_Python_ubuntu_env.yaml
-conda env export > photo_Python_win_env.yaml
 
-# .yaml íŒŒì¼ë¡œ ìƒˆë¡œìš´ ê°€ìƒí™˜ê²½ ë§Œë“¤ê¸°
+### create conda virtual environment from .yaml file
 conda env create -f photo_Python_ubuntu_env.yaml
-conda env create -f photo_Python_win_env.yaml
 
-# ê°€ìƒí™˜ê²½ ë¦¬ìŠ¤íŠ¸ ì¶œë ¥
+### remove conda envrionment
+conda env remove -n photo_Python_ubuntu_env
+
+
+## Windows
+Anaconda environment
+
+conda create -n photo_Python_win_env
 conda env list
 
-# ê°€ìƒí™˜ê²½ ì œê±°í•˜ê¸°
-conda env remove -n photo_Python_ubuntu_env
+### activate ê°??ƒ?™˜ê²? ?‹œ?‘
+conda activate photo_Python_win_env
+
+### deactivate ê°??ƒ?™˜ê²? ì¢…ë£Œ
+conda deactivate
+
+### install module
+conda install -c phygbu pyheif
+conda install -c conda-forge python-dateutil
+conda install -c conda-forge opencv piexif exifread 
+pip install hachoir
+
+### ê°??ƒ?™˜ê²? ?‚´ë³´ë‚´ê¸? (export)
+conda env export > photo_Python_win_env.yaml
+
+### .yaml ?ŒŒ?¼ë¡? ?ƒˆë¡œìš´ ê°??ƒ?™˜ê²? ë§Œë“¤ê¸?
+conda env create -f photo_Python_win_env.yaml
+
+### ê°??ƒ?™˜ê²? ë¦¬ìŠ¤?Š¸ ì¶œë ¥
+conda env list
+
+### ê°??ƒ?™˜ê²? ? œê±°í•˜ê¸?
 conda env remove -n photo_Python_win_env

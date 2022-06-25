@@ -23,13 +23,13 @@ import os
 from datetime import datetime
 import photo_utilities
 
-#for debugging
-debuging = False
-add_log = True
-if add_log == True :
-    log_file = 'duplicated_jpg_file_move.log'
+log_dir = "logs/"
+log_file = "{}{}.log".format(log_dir, os.path.basename(__file__)[:-3])
+err_log_file = "{}{}_err.log".format(log_dir, os.path.basename(__file__)[:-3])
+print ("log_file: {}".format(log_file))
+print ("err_log_file: {}".format(err_log_file))
 
-base_dir_name = '../../jpgfile/'
+base_dir_name = '../../jpgfile/2022/'
 
 fullnames = photo_utilities.getFullnameListOfallFiles(base_dir_name)
 
@@ -41,7 +41,9 @@ for i in range(len(fullnames[:])):
     if i < len(fullnames[:]) \
         and fullnames[i][-4:].lower() == ".jpg" \
         and fullnames[i+1][-4:].lower() == ".jpg":
-        print("Trying with {}".format(fullnames[i]))
+        print('#'*40,
+            "\n{2:.01f}%  ({0}/{1}) {3}".format(image_Num, len(fullnames), (image_Num/len(fullnames))*100, os.path.basename(__file__)))
+        print ("Starting...   fullname: {}".format(fullnames[i]))
        
         image_Num += 1
         if photo_utilities.checkDuplicated_jpg(fullnames[i], fullnames[i+1]) :
