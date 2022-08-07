@@ -29,11 +29,13 @@ ext_name = "jpg"
 #ext_name = "png"
 ext_name = "heic"
 
-add_log = True
-if add_log == True :
-    log_file = 'iamge_file_move_by_extentions-.log'
+log_dir = "logs/"
+log_file = "{}{}.log".format(log_dir, os.path.basename(__file__)[:-3])
+err_log_file = "{}{}_err.log".format(log_dir, os.path.basename(__file__)[:-3])
+print ("log_file: {}".format(log_file))
+print ("err_log_file: {}".format(err_log_file))
 
-base_dir_name = '../working/New_Photo/'
+base_dir_name = '../New_Photo/'
 
 fullnames = photo_utilities.getFullnameListOfallFiles(base_dir_name)
 
