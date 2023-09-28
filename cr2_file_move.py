@@ -31,7 +31,7 @@ print ("err_log_file: {}".format(err_log_file))
 
 base_dir_name = '../New_Photo/'
 
-fullnames = _photo_utilities.getFullnameListOfallFiles(base_dir_name)
+fullnames = _python_utilities.getFullnameListOfallFiles(base_dir_name)
 
 save_base_dir_name = '../../cr2file/'
 
@@ -69,7 +69,7 @@ for fullname in fullnames[:]:
 #############################################################################
 #############################################################################
 #############################################################################
-fullnames = _photo_utilities.getFullnameListOfallsubDirs(base_dir_name)
+fullnames = _python_utilities.getFullnameListOfallsubDirs(base_dir_name)
 print ("fullnames: {}".format(fullnames))
 
 import shutil 

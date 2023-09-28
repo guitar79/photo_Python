@@ -30,7 +30,7 @@ if add_log == True :
 base_dir_name = '../HDR_input/'
 save_base_dir_name = '../HDR_output/'
 
-dirnames = _photo_utilities.getFullnameListOfallsubDirs(base_dir_name)
+dirnames = _python_utilities.getFullnameListOfallsubDirs(base_dir_name)
 
 for dirname in dirnames[:1] :
     dirname_el = dirname.split(base_dir_name)
@@ -44,7 +44,7 @@ for dirname in dirnames[:1] :
         print ('*'*80)
         print ('{0} is already exist'.format(save_dir_name))
     
-    fullnames = _photo_utilities.getFullnameListOfallFiles(dirname)
+    fullnames = _python_utilities.getFullnameListOfallFiles(dirname)
     #fullname = fullnames[0]
     composite_lists = [fullnames[x:x+3] for x in range(0, len(fullnames), 3)]
     

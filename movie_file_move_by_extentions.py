@@ -36,7 +36,7 @@ ext_names = ["mp4", "mov", "3gp"]
 
 base_dir_name = "../New_Photo/"
 
-fullnames = _photo_utilities.getFullnameListOfallFiles(base_dir_name)
+fullnames = _python_utilities.getFullnameListOfallFiles(base_dir_name)
 
 for ext_name in ext_names :
 
@@ -76,7 +76,7 @@ for ext_name in ext_names :
 #############################################################################
 #############################################################################
 #############################################################################
-fullnames = _photo_utilities.getFullnameListOfallsubDirs(base_dir_name)
+fullnames = _python_utilities.getFullnameListOfallsubDirs(base_dir_name)
 print ("fullnames: {}".format(fullnames))
 
 import shutil 

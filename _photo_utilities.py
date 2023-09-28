@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Spyder Editor
 
@@ -25,7 +24,7 @@ created by guitar79@naver.com
 #for debugging
 #from datetime import datetime
 #from astropy.io import fits
-
+import cv2
 # =============================================================================
 
 def write_log2(log_file, log_str):
@@ -42,54 +41,8 @@ def write_log(log_file, log_str):
     with open(log_file, 'a') as f:
         f.write(msg + '\n')
         
-# =============================================================================        
-def getFullnameListOfallFiles(dirName):
-# =============================================================================
-    import os
-    # create a list of file and sub directories 
-    # names in the given directory 
-    listOfFile = sorted(os.listdir(dirName))
-    allFiles = list()
-    # Iterate over all the entries
-    for entry in listOfFile:
-        # Create full path
-        fullPath = os.path.join(dirName, entry)
-        # If entry is a directory then get the list of files in this directory 
-        if os.path.isdir(fullPath):
-            allFiles = allFiles + getFullnameListOfallFiles(fullPath)
-        else:
-            allFiles.append(fullPath)
-                
-    return allFiles
-
-
-def getFullnameListOfallsubDirs1(dirName):
-    ##############################################3
-    import os
-    allFiles = list()
-    for file in sorted(os.listdir(dirName)):
-        d = os.path.join(dirName, file)
-        allFiles.append(d)
-        if os.path.isdir(d):
-            allFiles.extend(getFullnameListOfallsubDirs1(d))
-
-    return allFiles
-
-def getFullnameListOfallsubDirs(dirName):
-    ##############################################3
-    import os
-    allFiles = list()
-    for it in os.scandir(dirName):
-        if it.is_dir():
-            allFiles.append(it.path)
-            allFiles.extend(getFullnameListOfallsubDirs(it))
-
-    return allFiles
 
 def checkDuplicated_jpg(fullname1, fullname2):
-    import cv2
-    #pip install opencv-python
-    #pip install opencv-contrib-python
     Duplicated_im = False
     try :         
         im1 = cv2.imread("{}".format(fullname1))
@@ -154,7 +107,7 @@ def get_image_datetime_str(fullname):
         image_datetime = tags['Image DateTime'].values.replace(':','')
         image_datetime = image_datetime.replace(' ','-')
     else : 
-        image_datetime = "00000000-000000"
+        image_datetime = "19990101-000000"
     
     return image_datetime
 
@@ -219,7 +172,7 @@ def get_fileInfo_from_image(fullname):
             image_datetime = tags['Image DateTime'].values.replace(':','')
             image_datetime = image_datetime.replace(' ','-')
         else : 
-            image_datetime = "00000000-000000"
+            image_datetime = "19990101-000000"
         ##########################################################
         
         

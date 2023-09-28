@@ -32,7 +32,7 @@ print ("err_log_file: {}".format(err_log_file))
 
 base_dir_name = '../../cr2file/2022/'
 
-fullnames = _photo_utilities.getFullnameListOfallFiles(base_dir_name)
+fullnames = _python_utilities.getFullnameListOfallFiles(base_dir_name)
 
 save_base_dir_name = '../duplicated/'
 
