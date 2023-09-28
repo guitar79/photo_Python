@@ -23,7 +23,7 @@ created by guitar79@naver.com
 """
 import os
 from datetime import datetime
-import photo_utilities
+import _photo_utilities
 
 ext_name = "jpg"
 #ext_name = "png"
@@ -37,7 +37,7 @@ print ("err_log_file: {}".format(err_log_file))
 
 base_dir_name = '../New_Photo/'
 
-fullnames = photo_utilities.getFullnameListOfallFiles(base_dir_name)
+fullnames = _photo_utilities.getFullnameListOfallFiles(base_dir_name)
 
 save_base_dir_name = "../{}file/".format(ext_name)
 
@@ -50,7 +50,7 @@ for fullname in fullnames[:]:
         try :
             print("Trying the file :\n{}".format(fullname))
             image_datetime, camera_company, camera_model, image_Software \
-                = photo_utilities.get_fileInfo_from_heifexif(fullname)
+                = _photo_utilities.get_fileInfo_from_heifexif(fullname)
 
             save_dir_name = '{0}{1}/{1}-{2}-{3}_{4}_{5}_{6}/'\
                       .format(save_base_dir_name, image_datetime[0:4], \
@@ -69,25 +69,25 @@ for fullname in fullnames[:]:
                       "{0}{1}_{2}_{3}_{4}_{5:08d}_py.{6}"\
                       .format(save_dir_name, image_datetime, \
                       camera_company, camera_model, image_Software, image_Num, ext_name))
-                photo_utilities.write_log(log_file, \
+                _photo_utilities.write_log(log_file, \
                       "{7} is moved to {0}{1}_{2}_{3}_{4}_{5:08d}_py.{6}"\
                       .format(save_dir_name, image_datetime, \
                       camera_company, camera_model, image_Software, image_Num, ext_name, fullname))
             else : 
-                photo_utilities.write_log(log_file, \
+                _photo_utilities.write_log(log_file, \
                       "{7} cannot move to {0}{1}_{2}_{3}_{4}_{5:08d}_py.{6}"\
                       .format(save_dir_name, image_datetime, \
                       camera_company, camera_model, image_Software, image_Num, ext_name, fullname))
 
         except Exception as err :
-            photo_utilities.write_log(log_file, 
+            _photo_utilities.write_log(log_file, 
               "{2} ::: {0} error with {1}".format(err, fullname, datetime.now()))
 
         
 #############################################################################
 #############################################################################
 #############################################################################
-fullnames = photo_utilities.getFullnameListOfallsubDirs(base_dir_name)
+fullnames = _photo_utilities.getFullnameListOfallsubDirs(base_dir_name)
 print ("fullnames: {}".format(fullnames))
 
 import shutil 

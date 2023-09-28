@@ -21,7 +21,7 @@ created by guitar79@naver.com
 """
 import os
 from datetime import datetime
-import photo_utilities
+import _photo_utilities
 
 log_dir = "logs/"
 log_file = "{}{}.log".format(log_dir, os.path.basename(__file__)[:-3])
@@ -36,7 +36,7 @@ ext_names = ["mp4", "mov", "3gp"]
 
 base_dir_name = "../New_Photo/"
 
-fullnames = photo_utilities.getFullnameListOfallFiles(base_dir_name)
+fullnames = _photo_utilities.getFullnameListOfallFiles(base_dir_name)
 
 for ext_name in ext_names :
 
@@ -47,7 +47,7 @@ for ext_name in ext_names :
     for fullname in fullnames[:]:
     #fullname = fullnames[0]
         if fullname[-4:].lower() == ".{}".format(ext_name) :
-            mov_datetime = photo_utilities.get_mov_creation_date(fullname)
+            mov_datetime = _photo_utilities.get_mov_creation_date(fullname)
 
             try :
                 print("Trying with {}...".format(fullname))
@@ -64,19 +64,19 @@ for ext_name in ext_names :
                 os.rename(fullname, '{0}{1}_{2:08d}_py.{3}'\
                           .format(save_dir_name, mov_datetime, Img_N, ext_name))
                 #print(fullname, '{0}{1}_{2:08d}_py.jpg'.format(save_dir_name, image_datetime, Img_N))
-                photo_utilities.write_log(log_file, \
+                _photo_utilities.write_log(log_file, \
                           '{4}:::{0}{1}_{2:08d}_py.{3}'.format(save_dir_name, \
                            mov_datetime, Img_N, ext_name, datetime.now()))
 
             except Exception as err :
-                photo_utilities.write_log(log_file,
+                _photo_utilities.write_log(log_file,
                           '{2} ::: error {0} with {1}'.format(err, Img_N, datetime.now()))
             Img_N += 1
         
 #############################################################################
 #############################################################################
 #############################################################################
-fullnames = photo_utilities.getFullnameListOfallsubDirs(base_dir_name)
+fullnames = _photo_utilities.getFullnameListOfallsubDirs(base_dir_name)
 print ("fullnames: {}".format(fullnames))
 
 import shutil 

@@ -21,7 +21,7 @@ created by guitar79@naver.com
 """
 import os
 from datetime import datetime
-import photo_utilities
+import _photo_utilities
 
 mode = 1
 
@@ -33,7 +33,7 @@ if add_log == True :
 
 base_dir_name = '../New_Photo/'
 
-fullnames = photo_utilities.getFullnameListOfallFiles(base_dir_name)
+fullnames = _photo_utilities.getFullnameListOfallFiles(base_dir_name)
 
 save_base_dir_name = '../jpgfile/'
 
@@ -42,10 +42,10 @@ for fullname in fullnames[:]:
 #fullname = fullnames[0]
     if fullname[-4:].lower() == ".jpg" or fullname[-5:].lower() == ".jpeg" :
 
-        image_datetime = photo_utilities.get_image_datetime_str(fullname).replace(':','')
+        image_datetime = _photo_utilities.get_image_datetime_str(fullname).replace(':','')
         image_datetime = image_datetime.replace(' ','-')
-        image_ModelID = photo_utilities.get_image_Model_name(fullname).replace(' ','')
-        image_Software = photo_utilities.get_image_Software(fullname)
+        image_ModelID = _photo_utilities.get_image_Model_name(fullname).replace(' ','')
+        image_Software = _photo_utilities.get_image_Software(fullname)
         
         try :
             print("Trying with {}...".format(fullname))
@@ -66,16 +66,16 @@ for fullname in fullnames[:]:
                     
             os.rename(fullname, '{0}{1}_{2:08d}_{3}_py.jpg'.format(save_dir_name, image_datetime, Img_N, image_Software))
             #print(fullname, '{0}{1}_{2:08d}_{3}_py.jpg'.format(save_dir_name, image_datetime, Img_N, image_Software))
-            photo_utilities.write_log(log_file, '{3}:::{0}{1}_{2:08d}_py.jpg'.format(save_dir_name, image_datetime, Img_N, datetime.now()))
+            _photo_utilities.write_log(log_file, '{3}:::{0}{1}_{2:08d}_py.jpg'.format(save_dir_name, image_datetime, Img_N, datetime.now()))
         
         except Exception as err :
-            photo_utilities.write_log(log_file, '{2} ::: error {0} with {1}'.format(err, Img_N, datetime.now()))
+            _photo_utilities.write_log(log_file, '{2} ::: error {0} with {1}'.format(err, Img_N, datetime.now()))
         Img_N += 1
         
 #############################################################################
 #############################################################################
 #############################################################################
-fullnames = photo_utilities.getFullnameListOfallsubDirs(base_dir_name)
+fullnames = _photo_utilities.getFullnameListOfallsubDirs(base_dir_name)
 print ("fullnames: {}".format(fullnames))
 
 import shutil 

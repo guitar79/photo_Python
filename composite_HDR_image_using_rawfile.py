@@ -21,7 +21,7 @@ created by guitar79@naver.com
 """
 import os
 import cv2
-import photo_utilities
+import _photo_utilities
 
 add_log = True
 if add_log == True :
@@ -30,7 +30,7 @@ if add_log == True :
 base_dir_name = '../HDR_input/'
 save_base_dir_name = '../HDR_output/'
 
-dirnames = photo_utilities.getFullnameListOfallsubDirs(base_dir_name)
+dirnames = _photo_utilities.getFullnameListOfallsubDirs(base_dir_name)
 
 for dirname in dirnames[:1] :
     dirname_el = dirname.split(base_dir_name)
@@ -44,14 +44,14 @@ for dirname in dirnames[:1] :
         print ('*'*80)
         print ('{0} is already exist'.format(save_dir_name))
     
-    fullnames = photo_utilities.getFullnameListOfallFiles(dirname)
+    fullnames = _photo_utilities.getFullnameListOfallFiles(dirname)
     #fullname = fullnames[0]
     composite_lists = [fullnames[x:x+3] for x in range(0, len(fullnames), 3)]
     
     for fullnames in composite_lists[:] :
         fullname_el = fullnames[0].split("/")
         
-        images, times = photo_utilities.readJpgPhoto_to_ImagesAndTimes(fullnames)
+        images, times = _photo_utilities.readJpgPhoto_to_ImagesAndTimes(fullnames)
     
         # Align input images
         alignMTB = cv2.createAlignMTB()

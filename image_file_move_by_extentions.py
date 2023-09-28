@@ -22,7 +22,7 @@ created by guitar79@naver.com
 import os
 import shutil 
 from datetime import datetime
-import photo_utilities
+import _photo_utilities
 
 log_dir = "logs/"
 log_file = "{}{}.log".format(log_dir, os.path.basename(__file__)[:-3])
@@ -40,7 +40,7 @@ ext_names = ["dng", "jpg", "png", "heic", "cr2"]
 
 base_dir_name = '../New_Photo/'
 
-fullnames = photo_utilities.getFullnameListOfallFiles(base_dir_name)
+fullnames = _photo_utilities.getFullnameListOfallFiles(base_dir_name)
 
 for ext_name in ext_names :
 
@@ -55,9 +55,9 @@ for ext_name in ext_names :
                 "\n{2:.01f}%  ({0}/{1}) {3}".format(image_Num, len(fullnames), (image_Num/len(fullnames))*100, os.path.basename(__file__)))
             print ("Starting...   fullname: {}".format(fullname))
             try :
-                image_datetime = photo_utilities.get_image_datetime_str(fullname)
-                image_ModelID = photo_utilities.get_image_Model_name(fullname).replace(' ','')
-                image_Software = photo_utilities.get_image_Software(fullname)
+                image_datetime = _photo_utilities.get_image_datetime_str(fullname)
+                image_ModelID = _photo_utilities.get_image_Model_name(fullname).replace(' ','')
+                image_Software = _photo_utilities.get_image_Software(fullname)
 
                 save_dir_name = '{0}{1}/{1}-{2}-{3}_{4}_{5}/'\
                           .format(save_base_dir_name, image_datetime[0:4], \
@@ -75,24 +75,24 @@ for ext_name in ext_names :
                           "{0}{1}_{2}_{3}_{4:08d}_py.{5}"\
                           .format(save_dir_name, image_datetime, \
                           image_ModelID, image_Software, image_Num, ext_name))
-                    photo_utilities.write_log(log_file, \
+                    _photo_utilities.write_log(log_file, \
                           "{6} is moved to {0}{1}_{2}_{3}_{4:08d}_py.{5}"\
                           .format(save_dir_name, image_datetime, \
                           image_ModelID, image_Software, image_Num, ext_name, fullname))
                 else :
-                    photo_utilities.write_log(log_file, \
+                    _photo_utilities.write_log(log_file, \
                           "{6} cannot move to {0}{1}_{2}_{3}_{4:08d}_py.{5}"\
                           .format(save_dir_name, image_datetime, \
                           image_ModelID, image_Software, image_Num, ext_name, fullname))
 
             except Exception as err :
-                photo_utilities.write_log(log_file,
+                _photo_utilities.write_log(log_file,
                   "{2} ::: {0} error with {1}".format(err, fullname, datetime.now()))
 
 #############################################################################
 #############################################################################
 #############################################################################
-fullnames = photo_utilities.getFullnameListOfallsubDirs(base_dir_name)
+fullnames = _photo_utilities.getFullnameListOfallsubDirs(base_dir_name)
 print ("fullnames: {}".format(fullnames))
 
 import shutil 

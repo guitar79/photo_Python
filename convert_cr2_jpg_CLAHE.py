@@ -16,7 +16,7 @@ import os
 from datetime import datetime
 import rawpy
 import cv2
-import photo_utilities
+import _photo_utilities
 
 #for debugging
 debuging = False
@@ -69,8 +69,8 @@ for base_dir_name in base_dir_names[31:40] :
                       .format(base_dir_name, save_dir_name, raw_name[-25:-4])) :
                     with rawpy.imread(raw_name) as raw:
                         img = raw.postprocess()
-                        img = photo_utilities.clahe_equalized(img)
-                        img = photo_utilities.bgr2rgb(img)
+                        img = _photo_utilities.clahe_equalized(img)
+                        img = _photo_utilities.bgr2rgb(img)
                     cv2.imwrite('{0}{1}{2}.jpg'\
                             .format(base_dir_name, save_dir_name, raw_name[-25:-4]), \
                             img, [int(cv2.IMWRITE_JPEG_QUALITY), 100])

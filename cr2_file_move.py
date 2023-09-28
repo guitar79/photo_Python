@@ -21,7 +21,7 @@ created by guitar79@naver.com
 """
 import os
 from datetime import datetime
-import photo_utilities
+import _photo_utilities
 
 log_dir = "logs/"
 log_file = "{}{}.log".format(log_dir, os.path.basename(__file__)[:-3])
@@ -31,7 +31,7 @@ print ("err_log_file: {}".format(err_log_file))
 
 base_dir_name = '../New_Photo/'
 
-fullnames = photo_utilities.getFullnameListOfallFiles(base_dir_name)
+fullnames = _photo_utilities.getFullnameListOfallFiles(base_dir_name)
 
 save_base_dir_name = '../../cr2file/'
 
@@ -42,8 +42,8 @@ for fullname in fullnames[:]:
         image_Num += 1
         try :
             print("Trying with {}...".format(fullname))
-            image_datetime = photo_utilities.get_image_datetime_str(fullname)
-            image_ModelID = photo_utilities.get_image_Model_name(fullname).replace(' ','')
+            image_datetime = _photo_utilities.get_image_datetime_str(fullname)
+            image_ModelID = _photo_utilities.get_image_Model_name(fullname).replace(' ','')
             #image_Num = photo_utilities.get_image_number(fullname)
 
             save_dir_name = '{0}{1}/{1}-{2}-{3}_{4}/'\
@@ -57,19 +57,19 @@ for fullname in fullnames[:]:
                     
             if not os.path.exists('{0}{1}_{2:08d}_py.cr2'.format(save_dir_name, image_datetime, image_Num)):
                 os.rename(fullname, '{0}{1}_{2:08d}_py.cr2'.format(save_dir_name, image_datetime, image_Num))
-                photo_utilities.write_log(log_file, "{3} is moved to {0}{1}_{2:08d}_py.cr2".format(save_dir_name, image_datetime, image_Num, fullname))
+                _photo_utilities.write_log(log_file, "{3} is moved to {0}{1}_{2:08d}_py.cr2".format(save_dir_name, image_datetime, image_Num, fullname))
             else : 
-                photo_utilities.write_log(log_file, "{3} is cannot moved because {0}{1}_{2:08d}_py.cr2 is already exist..".format(save_dir_name, image_datetime, image_Num, fullname))
+                _photo_utilities.write_log(log_file, "{3} is cannot moved because {0}{1}_{2:08d}_py.cr2 is already exist..".format(save_dir_name, image_datetime, image_Num, fullname))
 
         except Exception as err :
-            photo_utilities.write_log(log_file, 
+            _photo_utilities.write_log(log_file, 
               "{2} ::: {0} error with {1}".format(err, fullname, datetime.now()))
 
         
 #############################################################################
 #############################################################################
 #############################################################################
-fullnames = photo_utilities.getFullnameListOfallsubDirs(base_dir_name)
+fullnames = _photo_utilities.getFullnameListOfallsubDirs(base_dir_name)
 print ("fullnames: {}".format(fullnames))
 
 import shutil 
