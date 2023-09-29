@@ -33,7 +33,7 @@ print("len(fullnames):", len(fullnames))
 print("fullnames:", fullnames)
 
 ext_names_mov = [".mp4", ".mov", ".3gp", ".avi"]
-ext_names_img = [".dng", ".jpg", ".heic", ".cr2", ".png"]
+ext_names_img = [".dng", ".jpg", ".cr2", ".png"]
 
 #%%
 for fullname in fullnames[:]:
@@ -65,16 +65,21 @@ for fullname in fullnames[:]:
                 print(f'{str(new_fpath)} is already exist...')
                 new_date = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S')
                 new_fpath = new_fpath.parents[0] / f'{new_fpath.stem}_{new_date}{new_fpath.suffix}'
+            if not new_fpath.exists() :
+                print(f'{str(new_fpath)} is not exist...')
+            else : 
+                print(f'{str(new_fpath)} is already exist...')
+                new_date = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S')
+                new_fpath = new_fpath.parents[0] / f'{new_fpath.stem}_{new_date}{new_fpath.suffix}'
             shutil.move(str(fpath), str(new_fpath))
         except Exception as err :
             print(err)
             
-
     if fpath.suffix.lower() in ext_names_img :
         try: 
-            image_datetime = _photo_utilities.get_image_datetime_str(fullname)
-            image_ModelID = _photo_utilities.get_image_Model_name(fullname).replace(' ','')
-            image_Software = _photo_utilities.get_image_Software(fullname)
+            image_datetime = _photo_utilities.get_image_datetime_str(str(fpath))
+            image_ModelID = _photo_utilities.get_image_Model_name(str(fpath)).replace(' ','')
+            image_Software = _photo_utilities.get_image_Software(str(fpath))
             #print("image_datetime :", image_datetime)
             
             image_dt = datetime.strptime(image_datetime, '%Y%m%d-%H%M%S')
@@ -98,17 +103,103 @@ for fullname in fullnames[:]:
                 print(f'{str(new_fpath)} is already exist...')
                 new_date = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S')
                 new_fpath = new_fpath.parents[0] / f'{new_fpath.stem}_{new_date}{new_fpath.suffix}'
+            if not new_fpath.exists() :
+                print(f'{str(new_fpath)} is not exist...')
+            else : 
+                print(f'{str(new_fpath)} is already exist...')
+                new_date = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S')
+                new_fpath = new_fpath.parents[0] / f'{new_fpath.stem}_{new_date}{new_fpath.suffix}'
+            if not new_fpath.exists() :
+                print(f'{str(new_fpath)} is not exist...')
+            else : 
+                print(f'{str(new_fpath)} is already exist...')
+                new_date = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S')
+                new_fpath = new_fpath.parents[0] / f'{new_fpath.stem}_{new_date}{new_fpath.suffix}'
             shutil.move(str(fpath), str(new_fpath))
+        except Exception as err :
+            print(err)  
+    
+    if fpath.suffix.lower() == '.heic' :
+        try: 
+            image_datetime, camera_company, image_ModelID, image_Software = \
+                _photo_utilities.get_fileInfo_from_heifexif(str(fpath))
+            #print("image_datetime :", image_datetime)
+            
+            image_dt = datetime.strptime(image_datetime, '%Y%m%d-%H%M%S')
+            # print("image_dt :", image_dt)
+            # print(f"image_dt.month : {image_dt.month:02d}")
+            # print(f"image_dt.day : {image_dt.day:02d}")
+            SAVEDIR = (BASEDIR/ str(image_dt.year) / f'{(image_dt.month):02d}' / f'{(image_dt.day):02d}_{image_ModelID}')
+            new_fname = f'{image_datetime}_{image_ModelID}_py{fpath.suffix}'
+            new_fpath = SAVEDIR / new_fname
+            print("new_fpath :", new_fpath)
+            for i in range(3, -1, -1):
+                if not new_fpath.parents[i].exists() :
+                    os.mkdir(str(new_fpath.parents[i]))
+                    #print(f'{str(new_fpath.parents[i])} is created...')
+                else :
+                    #print(f'{str(new_fpath.parents[i])} is exist...')
+                    pass
+            if not new_fpath.exists() :
+                print(f'{str(new_fpath)} is not exist...')
+            else : 
+                print(f'{str(new_fpath)} is already exist...')
+                new_date = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S')
+                new_fpath = new_fpath.parents[0] / f'{new_fpath.stem}_{new_date}{new_fpath.suffix}'
+            if not new_fpath.exists() :
+                print(f'{str(new_fpath)} is not exist...')
+            else : 
+                print(f'{str(new_fpath)} is already exist...')
+                new_date = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S')
+                new_fpath = new_fpath.parents[0] / f'{new_fpath.stem}_{new_date}{new_fpath.suffix}'
+            if not new_fpath.exists() :
+                print(f'{str(new_fpath)} is not exist...')
+            else : 
+                print(f'{str(new_fpath)} is already exist...')
+                new_date = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S')
+                new_fpath = new_fpath.parents[0] / f'{new_fpath.stem}_{new_date}{new_fpath.suffix}'
+            shutil.move(str(fpath), str(new_fpath))
+        except Exception as err :
+            print(err) 
+
+    if fpath.suffix.lower() =='.pp3' :
+        try: 
+            os.remove(str(fpath))
+            print(f'{str(fpath)} is removed...')
         except Exception as err :
             print(err)  
 
 #%%
 #############################################################################
-for i in range(4) :
-    fullnames = _Python_utilities.getFullnameListOfallsubDirs(str(NEW_files))
-    print ("fullnames: {}".format(fullnames))
-    for fullname in fullnames[:] :
-        # Check is empty..
-        if len(os.listdir(fullname)) == 0 :
-            shutil.rmtree(r"{}".format(fullname)) # Delete..
-            print ("rmtree {}\n".format(fullname))
+# for i in range(4) :
+#     fullnames = _Python_utilities.getFullnameListOfallsubDirs(str(NEW_files))
+#     print ("fullnames: {}".format(fullnames))
+#     for fullname in fullnames[:] :
+#         # Check is empty..
+#         if len(os.listdir(fullname)) == 0 :
+#             shutil.rmtree(r"{}".format(fullname)) # Delete..
+#             print ("rmtree {}\n".format(fullname))
+for i in range(10):
+    DOINGDIR = NEW_files
+    DOINGDIRs = sorted(_Python_utilities.getFullnameListOfallsubDirs(DOINGDIR))
+    #print ("DOINGDIRs: ", format(DOINGDIRs))
+    print ("len(DOINGDIRs): ", format(len(DOINGDIRs)))
+    try: 
+        for DOINGDIR in DOINGDIRs : 
+            if len(os.listdir(str(DOINGDIR))) == 0 :
+                shutil.rmtree(f"{str(DOINGDIR)}") # Delete..
+                print (f"rmtree {str(DOINGDIR)}")
+            else : 
+                fpaths = _Python_utilities.getFullnameListOfallFiles(str(DOINGDIR))
+                print("fpaths", fpaths)
+
+                for fpath in fpaths[:]:
+                    print("fpath", fpath)
+
+                    if fpath[-4:].lower() in [".txt", ".log", ".ini",
+                                            ".csv", ".thm" , "proj"] \
+                                            and os.path.isfile(fpath):
+                        os.remove("{}".format(fpath))
+                        print("{} is removed...".format(fpath))
+    except Exception as err :
+            print(err) 

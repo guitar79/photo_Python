@@ -1,9 +1,9 @@
 # photo_Python
 
-##Anaconda environment
-
-conda create -n photo_Python_env
 conda env list
+
+## Anaconda environment
+conda create -n photo_Python_env
 
 ### activate conda virtual environment
 conda activate photo_Python_env
@@ -13,8 +13,7 @@ conda deactivate
 
 ### install module
 conda install -c phygbu pyheif spyder
-conda install -c conda-forge opencv-python piexif exifread 
-conda install -c conda-forge python-dateutil
+conda install -c conda-forge opencv-python piexif exifread python-dateutil
 pip install hachoir
 
 ### expert conda virtual environment 

@@ -41,7 +41,6 @@ def write_log(log_file, log_str):
         f.write(msg + '\n')
 
 def write_log_old(log_file, log_str):
-    import time
     timestamp = time.strftime(r'%Y-%m-%d %H:%M:%S')
     msg = '[' + timestamp + '] ' + log_str
     print(msg)
@@ -49,7 +48,6 @@ def write_log_old(log_file, log_str):
         f.write(msg + '\n')
 
 def write_log2(log_file, log_str):
-    import os
     with open(log_file, 'a') as log_f:
         log_f.write("{}, {}\n".format(os.path.basename(__file__), log_str))
     return print ("{}, {}\n".format(os.path.basename(__file__), log_str))
@@ -89,8 +87,7 @@ def removeAllEmptyDirs(fpath):
     fullname : fpath
         The fullname of input directory...
 
-    """
-    
+    """ 
     del_N = 0
     for i in range(10) : 
         fullnames = getFullnameListOfallsubDirs(fpath)
