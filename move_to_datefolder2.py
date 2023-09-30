@@ -26,7 +26,7 @@ if not os.path.exists('{0}'.format(log_dir)):
 #######################################################
 #%%
 BASEDIR = Path("/mnt/photo/")
-DOINGDIR = BASEDIR / "NEW_files"
+DOINGDIR = BASEDIR / "temp_files"
 DUPLICATEDIR =  BASEDIR / "dupulicate_files"
 fullnames = _Python_utilities.getFullnameListOfallFiles(DOINGDIR)
 #print("fullnames:", fullnames)
@@ -41,10 +41,9 @@ for fullname in fullnames[:]:
         fpath.suffix.lower() == '.cr2' or \
         fpath.suffix.lower() == '.png' or \
         fpath.suffix.lower() == '.jpg' or \
-        fpath.suffix.lower() == '.jpeg' or \
         fpath.suffix.lower() == '.dng' or \
-        fpath.suffix.lower() == ".mpg" or \
         fpath.suffix.lower() == ".mp4" or \
+        fpath.suffix.lower() == ".mpg" or \
         fpath.suffix.lower() == ".mov" or \
         fpath.suffix.lower() == ".wmv" or \
         fpath.suffix.lower() == ".3gp" or \
@@ -93,7 +92,7 @@ for fullname in fullnames[:]:
 #############################################################################
 for i in range(10):
     BASEDIR = Path("/mnt/photo/")
-    DOINGDIR = BASEDIR / "NEW_files"
+    DOINGDIR = BASEDIR / "temp_files"
     DOINGDIRs = sorted(_Python_utilities.getFullnameListOfallsubDirs(DOINGDIR))
     #print ("DOINGDIRs: ", format(DOINGDIRs))
     print ("len(DOINGDIRs): ", format(len(DOINGDIRs)))
@@ -110,10 +109,12 @@ for i in range(10):
                 for fpath in fpaths[:]:
                     print("fpath", fpath)
 
-                    if fpath[-4:].lower() in [".txt", ".log", ".ini", "json", "info",
-                                            ".csv", ".thm", "proj", ".pp3", "s.db"] \
+                    if fpath[-4:].lower() in [".txt", ".log", ".ini", "json", "info", ".xmp",
+                                              ".sfk",
+                                            ".csv", ".thm", "proj", ".pp3", "s.db", "b.db"] \
                                             and os.path.isfile(fpath):
                         os.remove("{}".format(fpath))
                         print("{} is removed...".format(fpath))
             except Exception as err :
                     print(err) 
+                    

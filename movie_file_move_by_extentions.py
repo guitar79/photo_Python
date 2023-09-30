@@ -23,6 +23,8 @@ import os
 from datetime import datetime
 import _photo_utilities
 
+
+
 log_dir = "logs/"
 log_file = "{}{}.log".format(log_dir, os.path.basename(__file__)[:-3])
 err_log_file = "{}{}_err.log".format(log_dir, os.path.basename(__file__)[:-3])

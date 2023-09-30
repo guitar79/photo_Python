@@ -72,19 +72,19 @@ def get_image_number(fullname):
         image_num = "00"
     return image_num
 
-def get_fileInfo_from_heifexif(fullname):
-    heif_file = pyheif.read_heif(fullname)
+def get_fileInfo_from_heifexif(fpath):
+    fpath = Path(fpath)
+    heif_file = pyheif.read_heif(str(fpath))
 
     # Retrive the metadata
     for metadata in heif_file.metadata or []:
         if metadata['type'] == 'Exif':
             exif_dict = piexif.load(metadata['data'])
-    image_datetime = exif_dict['0th'][306].decode('utf-8').replace(':','')
-    file_datetime = image_datetime.replace(' ','-')
-    camera_company = exif_dict['0th'][271].decode('utf-8')
+    file_datetime = exif_dict['0th'][306].decode('utf-8').replace(':','')
+    file_datetime = file_datetime.replace(' ','-')
     camera_model = exif_dict['0th'][272].decode('utf-8').replace(' ','-')
     Software = "-"
-    return file_datetime, camera_company, camera_model, Software
+    return file_datetime, camera_model, Software
 
 
 def get_fileInfo_from_exif(fpath):
@@ -103,6 +103,7 @@ def get_fileInfo_from_exif(fpath):
         image_datetime = image_datetime.replace('오후','')
         image_datetime = image_datetime.replace('오전','')
         image_datetime = image_datetime.replace('  ','00')
+        image_datetime = image_datetime.replace('--','00')
 
         ##########################################################    
         if 'Image Software' in tags : 
@@ -170,12 +171,18 @@ def get_fileInfo(fpath):
     fpath = Path(fpath)
     if fpath.suffix.lower() == ".heic" :
         file_datetime, camera_model, Software = \
-            get_fileInfo_from_heifexif(Path(fpath))   
+            get_fileInfo_from_heifexif(str(fpath))   
+
     elif fpath.suffix.lower() == ".cr2" or \
-        fpath.suffix.lower() == ".jpg" :
+        fpath.suffix.lower() == ".png" or \
+        fpath.suffix.lower() == ".jpg" or \
+        fpath.suffix.lower() == ".jpeg" or \
+        fpath.suffix.lower() == '.dng' :
         file_datetime, camera_model, Software = \
             get_fileInfo_from_exif(str(fpath))
+        
     elif fpath.suffix.lower() == ".mp4" or \
+        fpath.suffix.lower() == ".mpg" or \
         fpath.suffix.lower() == ".mov" or \
         fpath.suffix.lower() == ".wmv" or \
         fpath.suffix.lower() == ".3gp" or \
