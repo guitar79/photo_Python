@@ -20,6 +20,8 @@ import rawpy
 import time
 from dateutil.parser import parse
 
+ext_names_mov = [".mp4", ".mov", ".3gp", ".avi"]
+ext_names_img = [".dng", ".jpg", ".cr2", ".png"]
         
 def checkDuplicated_jpg(fullname1, fullname2):
     Duplicated_im = False
@@ -210,10 +212,10 @@ def get_mov_creation_date(fpath):
         file_datetime = parse(time.ctime(os.path.getctime(str(fpath)))).strftime("%Y%m%d-%H%M%S")
     return file_datetime
 
-def write_log(log_file, log_str):
-    with open(log_file, 'a') as log_f:
-        log_f.write("{}, {}\n".format(os.path.basename(__file__), log_str))
-    return print ("{}, {}\n".format(os.path.basename(__file__), log_str))
+# def write_log(log_file, log_str):
+#     with open(log_file, 'a') as log_f:
+#         log_f.write("{}, {}\n".format(os.path.basename(__file__), log_str))
+#     return print ("{}, {}\n".format(os.path.basename(__file__), log_str))
 
 def bgr2rgb(bgr_image):
     RGB = np.zeros((bgr_image.shape[0], bgr_image.shape[1], 3), dtype=np.uint8)
